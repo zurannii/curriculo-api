@@ -5,7 +5,7 @@ const prisma = new PrismaClient;
 
 class UserGetAllController {
     async handle(req: Request, res: Response) {
-        const users = await prisma.findAll();
+        const users = await prisma.user.findMany();
 
         return res.json(users);
   };
