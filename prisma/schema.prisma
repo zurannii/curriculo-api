@@ -5,11 +5,88 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id                 Int                 @id @default(autoincrement())
+  name               String
+  current_position   String?
+  professional_summary String?
+  profile_picture    String?
+  location           String?
+  email              String              @unique
+  phone              String?
+  linkedin           String?
+  github             String?
+
+  experiences        ProfessionalExperience[]
+  education          Education[]
+  projects           Project[]
+  skills             Skill[]
+  certifications     Certification[]
+  languages          Language[]
+}
+
+model ProfessionalExperience {
+  id          Int     @id @default(autoincrement())
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  role        String
+  company     String?
+  start_date  DateTime?
+  end_date    DateTime?
+}
+
+model Education {
+  id          Int     @id @default(autoincrement())
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  degree      String
+  institution String?
+  start_date  DateTime?
+  end_date    DateTime?
+}
+
+model Project {
+  id                 Int     @id @default(autoincrement())
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId             Int
+  title              String
+  description        String?
+  role               String?
+  technologies_used  String?
+  cover_image        String?
+  github_link        String?
+}
+
+model Skill {
+  id      Int    @id @default(autoincrement())
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  Int
+  name    String
+  type    String?
+}
+
+model Certification {
+  id               Int    @id @default(autoincrement())
+  user             User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           Int
+  name             String
+  institution      String?
+  completion_date  DateTime?
+  certificate_link String?
+}
+
+model Language {
+  id           Int    @id @default(autoincrement())
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int
+  language     String
+  proficiency  String?
 }
