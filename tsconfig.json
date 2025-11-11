@@ -1,4 +1,6 @@
 {
+  
+
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
@@ -20,7 +22,7 @@
 
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    //"exactOptionalPropertyTypes": true,
 
     // Style Options
     // "noImplicitReturns": true,
